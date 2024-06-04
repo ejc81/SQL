@@ -1,4 +1,6 @@
--- This project utilized data from the following Netflix dataset: 
+-- This project reveals insights about TV and Movie content hosted on Netflix. 
+
+-- The project was written using the PostgreSQL dialect and utilized data from the following two Netflix datasets:
 
 CREATE TABLE netflix_titles_info
     ("show_id" varchar(5), "type" varchar(7), "title" varchar(58), "country" varchar(74), "date_added" timestamp, "release_year" int, "rating" varchar(5), "duration" varchar(9), "listed_in" varchar(74))
@@ -58,21 +60,10 @@ VALUES
     ('s20', NULL, 'Blanca SuÃ¡rez| IvÃ¡n Marcos| Ã“scar Casas| AdriÃ¡n Lastra| Francesc Garrido| Stefan Weinert| Julia MÃ¶ller| Alicia Chojnowski')
     ;
 
--- Try to figure out which attribute you'd use to join the two Netflix tables. How can you see what attributes (aka columns) there are in each table to find out what they have in common?
-
-SELECT * FROM "netflix_people" LIMIT 5; 
-
-SELECT * FROM "netflix_titles_info" LIMIT 5;
-
--- Using the PostgreSQL dialect, write a join to select a few columns from both tables at the same time.
-
-SELECT people.show_id, people.director, titles.title, titles.type FROM "netflix_people" people
-LEFT JOIN "netflix_titles_info" titles
-ON people.show_id = titles.show_id; 
+-- The following SQL was written to answer specific questions about the content on Netflix:
 
 -- How many movie titles are there in the database? (movies only, not tv shows)
  
-
 SELECT COUNT(*) FROM "netflix_titles_info"
 	WHERE type = 'Movie'; 
     
@@ -96,4 +87,4 @@ SELECT director, title FROM "netflix_titles_info" titles
 
 SELECT title, release_year FROM "netflix_titles_info"
 	WHERE type = 'Movie'
-    AND release_year <= (SELECT MIN(release_year) FROM 		"netflix_titles_info" WHERE type = 'Movie');
+    AND release_year <= (SELECT MIN(release_year) FROM "netflix_titles_info" WHERE type = 'Movie');
